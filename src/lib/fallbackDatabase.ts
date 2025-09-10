@@ -29,6 +29,12 @@ class FallbackDatabase {
 
   private loadFromStorage() {
     try {
+      // Check if we're in a browser environment
+      if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+        console.log('Not in browser environment, skipping localStorage load');
+        return;
+      }
+
       const userData = localStorage.getItem('alumni_users');
       const fundraiserData = localStorage.getItem('alumni_fundraisers');
       const eventData = localStorage.getItem('alumni_events');
@@ -49,6 +55,12 @@ class FallbackDatabase {
 
   private saveToStorage() {
     try {
+      // Check if we're in a browser environment
+      if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+        console.log('Not in browser environment, skipping localStorage save');
+        return;
+      }
+
       localStorage.setItem('alumni_users', JSON.stringify(this.data.users));
       localStorage.setItem('alumni_fundraisers', JSON.stringify(this.data.fundraisers));
       localStorage.setItem('alumni_events', JSON.stringify(this.data.events));
@@ -170,7 +182,7 @@ class FallbackDatabase {
     return [...this.data.users];
   }
 
-  // Fundraiser operations
+  // Fundraiser operations 13
   async getAllFundraisers(): Promise<Fundraiser[]> {
     return [...this.data.fundraisers];
   }
